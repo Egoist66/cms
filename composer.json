@@ -1,0 +1,22 @@
+{
+    "name": "razor/cms",
+    "autoload": {
+        "psr-4": {
+            "Engine\\": "engine/",
+            "Engine\\DI\\": "engine/DI",
+            "Engine\\Utils\\": "engine/Utils",
+            "Engine\\Core\\": "engine/Core",
+            "Engine\\Service\\": "engine/Service"
+
+        }
+    },
+    "authors": [
+        {
+            "name": "Farid Mahmudov",
+            "email": "Razormad666@gmail.com"
+        }
+    ],
+  "require": {
+    "ext-pdo": "*"
+  }
+}
