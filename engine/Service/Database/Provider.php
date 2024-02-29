@@ -2,7 +2,19 @@
 
 namespace Engine\Service\Database;
 
-class Provider
-{
+use Engine\Core\Database\Database;
+use Engine\Service\AbstractProvider;
 
+class Provider extends AbstractProvider
+{
+    /**
+     * @var string
+     */
+    public string $serviceName = 'db';
+    final public function init(): void
+    {
+        $db = Database::dbInst();
+        $this->di->set($this->serviceName, $db);
+    }
 }
+

@@ -13,7 +13,7 @@ final class Database {
     private PDO $conn;
 
     private function __construct() {
-        require_once './engine/Config/config.php';
+        require_once './engine/Config/Database/db-config.php';
         try {
             $dsn = "mysql:host=" . DB_HOST . ";" . "dbname=" . DB_NAME;
             $this->conn = new PDO(

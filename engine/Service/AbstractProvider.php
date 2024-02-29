@@ -23,7 +23,7 @@ abstract class AbstractProvider
     /**
      * @return mixed
      */
-    abstract function init(): mixed;
+    abstract public function init(): void;
 
 }
 

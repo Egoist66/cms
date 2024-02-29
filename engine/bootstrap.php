@@ -9,9 +9,14 @@ use Engine\DI\DI;
 try {
     //Dependency injection
     $di = new DI();
-    $di->set('test', ['db' => 'db_obj']);
-    $di->set('test2', ['mail' => 'db_obj2']);
+    $services =  require_once __DIR__ . '/Config/Service/service.php';
 
+    // Init services
+
+    foreach ($services as $service){
+        $provider = new $service($di);
+        $provider->init();
+    }
 
     $cms = new CMS($di);
     $cms->run();

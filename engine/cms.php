@@ -25,8 +25,7 @@ class CMS
      */
     public final function run(): void {
 
-        $db = $this->di->get('test');
-
+       VarDumper::dump('Print', $this->di);
 
     }
 }

@@ -41,7 +41,7 @@ class DI
      * @param string $key
      * @return mixed
      */
-    final public function return_if_has(string $key): mixed
+    private function return_if_has(string $key): mixed
     {
         return $this->container[$key] ?? null;
     }
