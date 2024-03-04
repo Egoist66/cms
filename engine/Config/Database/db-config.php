@@ -8,6 +8,5 @@
  */
 const DB_HOST = 'localhost';
 const DB_NAME = 'api';
-
 const DB_PASSWORD = '';
 const DB_USERNAME = 'root';

@@ -5,8 +5,7 @@ namespace Engine;
 use Engine\DI\DI;
 use Engine\Utils\VarDumper;
 use Engine\Core\Database\Database;
-
-
+use Engine\Core\Router\Router;
 
 class CMS
 {
@@ -14,10 +13,12 @@ class CMS
      * @var DI
      */
     private DI $di;
+    public Router $router;
 
 
     public function __construct(DI $di){
         $this->di = $di;
+        $this->router = $this->di->get('router');
     }
 
     /**
@@ -25,7 +26,6 @@ class CMS
      */
     public final function run(): void {
 
-       VarDumper::dump('Print', $this->di);
-
+        //$this->router->add('home', '/', 'HomeController/index');
     }
 }

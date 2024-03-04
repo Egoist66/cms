@@ -4,7 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Engine\CMS;
 use Engine\DI\DI;
-
+use Engine\Utils\VarDumper;
 
 try {
     //Dependency injection
@@ -18,8 +18,12 @@ try {
         $provider->init();
     }
 
+
     $cms = new CMS($di);
     $cms->run();
+
+
+    VarDumper::dump('Print', $di, ['size'=>'18px','color'=>'purple']);
 
 
 } catch (\ErrorException $e) {

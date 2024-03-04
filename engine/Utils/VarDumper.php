@@ -54,5 +54,7 @@ final class VarDumper
                 throw new Exception("Unknown type -- `$type` -- argument for $method method!");
         }
     }
+
+ 
 }
 

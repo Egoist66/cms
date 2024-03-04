@@ -8,11 +8,13 @@ use PDOException;
 use Engine\Utils\VarDumper;
 use PDOStatement;
 
-final class Database {
+final class Database
+{
     private static Database|null $instance = null;
     private PDO $conn;
 
-    private function __construct() {
+    private function __construct()
+    {
         require_once './engine/Config/Database/db-config.php';
         try {
             $dsn = "mysql:host=" . DB_HOST . ";" . "dbname=" . DB_NAME;
@@ -58,14 +60,13 @@ final class Database {
      * @param array $prepared_params
      * @return bool|PDOStatement
      */
-    public function execute(string $sql, array $prepared_params): bool | PDOStatement
+    public function execute(string $sql, array $prepared_params): bool|PDOStatement
     {
-       try {
-           return $this->getConn()->prepare($sql)->execute($prepared_params);
-       }
-       catch (PDOException $e){
+        try {
+            return $this->getConn()->prepare($sql)->execute($prepared_params);
+        } catch (PDOException $e) {
             return false;
-       }
+        }
     }
 
     /**
@@ -73,13 +74,12 @@ final class Database {
      * @param string $mode single | ''
      * @return mixed
      */
-    public function query(string $sql, string $mode): mixed
+    public function query(string $sql, ?string $mode = null): mixed
     {
         try {
             $stm = $this->getConn()->query($sql);
             return $mode === 'single' ? $stm->fetch() : $stm->fetchAll(PDO::FETCH_ASSOC);
-        }
-        catch (PDOException $e){
+        } catch (PDOException $e) {
             return [];
         }
 
