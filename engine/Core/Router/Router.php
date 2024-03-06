@@ -2,59 +2,75 @@
 
 namespace Engine\Core\Router;
 
-class Router {
+use Engine\AbstractController;
+use Engine\Utils\VarDumper;
+
+class Router
+{
 
     private array $routes = [];
     private $dispatcher;
-    private $host;
+    private string $host;
 
-    public function __construct($host){
+    public function __construct(string $host)
+    {
         $this->host = $host;
 
     }
-    
-     
-  
-    
+
+
     /**
      * adds route
      *
-     * @param  mixed $key
-     * @param  mixed $pattern
-     * @param  mixed $controller
-     * @param  mixed $method
+     * @param mixed $key
+     * @param mixed $pattern
+     * @param mixed $controller
+     * @param mixed $method
      * @return void
      */
-    public function add(string $key, string $pattern, $controller, string $method = 'GET'): void {
+    public final function add(string $key, string $pattern, string $controller, string $method = 'GET'): void
+    {
 
         $this->routes[$key] = [
-            'pattern'    => $pattern,
+            'pattern' => $pattern,
             'controller' => $controller,
-            'method'     => $method
+            'method' => $method
 
         ];
+
+
     }
-    
+
     /**
      * dispatch
      *
-     * @param  mixed $method
-     * @param  mixed $uri
-     * @return mixed
-    */
+     * @param mixed $method
+     * @param mixed $uri
+     * @return DispatchedRoute|null
+     */
 
 
-    public function dispatch(string $method , string $uri){
-
+    public final function dispatch(string $method, string $uri): DispatchedRoute | null
+    {
+        return $this->getDispatcher()->dispatch($method, $uri);
     }
 
-    public function getDispatcher(){
-        if(is_null($this->dispatcher)){
-         
+    /**
+     * @return UrlDispatcher
+     */
+    public final function getDispatcher(): UrlDispatcher
+    {
+        if (is_null($this->dispatcher)) {
+            $this->dispatcher = new UrlDispatcher();
+            foreach ($this->routes as $route){
+                $this->dispatcher->register($route['method'], $route['pattern'], $route['controller']);
+            }
         }
 
         return $this->dispatcher;
     }
+
+
 }
 
 

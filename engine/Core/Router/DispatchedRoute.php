@@ -5,23 +5,26 @@ namespace Engine\Core\Router;
 
 
 
+use Engine\AbstractController;
+
 class DispatchedRoute {
 
-    private object $controller;
+    private string $controller;
     private array $parameters;
 
-    public function __construct(object $controller, array $parameters = []){
+    public function __construct(string $controller, array $parameters = []){
         $this->controller = $controller;
         $this->parameters = $parameters;
     }
 
-    
+
     /**
      * getController
      *
-     * @return object
+     * @return string
      */
-    public function getController(): object{
+    public final function getController(): string
+    {
         return $this->controller;
     }    
     /**
@@ -29,7 +32,7 @@ class DispatchedRoute {
      *
      * @return array
      */
-    public function getParameters(): array{
+    public final function getParameters(): array{
         return $this->parameters;
     }
 

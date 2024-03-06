@@ -10,7 +10,7 @@ use Engine\Service\AbstractProvider;
 class Provider extends AbstractProvider
 {
 
-    public $serviceName = 'router';
+    public string $serviceName = 'router';
         
     /**
      * inits services

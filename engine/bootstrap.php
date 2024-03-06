@@ -9,11 +9,11 @@ use Engine\Utils\VarDumper;
 try {
     //Dependency injection
     $di = new DI();
-    $services =  require_once __DIR__ . '/Config/Service/service.php';
+    $services = require_once __DIR__ . '/Config/Service/service.php';
 
     // Init services
 
-    foreach ($services as $service){
+    foreach ($services as $service) {
         $provider = new $service($di);
         $provider->init();
     }
@@ -23,9 +23,18 @@ try {
     $cms->run();
 
 
-    VarDumper::dump('Print', $di, ['size'=>'18px','color'=>'purple']);
+    //VarDumper::dump('dump', $di)->fline(__FILE__, __LINE__);
 
 
-} catch (\ErrorException $e) {
-    echo $e->getMessage();
+} catch (Exception $e) {
+
+    VarDumper::dump('print', $e)->fline(__FILE__, __LINE__);
+
+
 }
+
+$arr = [
+    'name' => 'Farid',
+    'age' => 26
+];
+
