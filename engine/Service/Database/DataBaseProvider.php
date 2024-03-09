@@ -5,7 +5,7 @@ namespace Engine\Service\Database;
 use Engine\Core\Database\Database;
 use Engine\Service\AbstractProvider;
 
-class Provider extends AbstractProvider
+class DataBaseProvider extends AbstractProvider
 {
     /**
      * @var string

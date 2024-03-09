@@ -3,9 +3,6 @@
 
 namespace Engine\Core\Router;
 
-use Engine\Core\Router\DispatchedRoute;
-use Engine\Utils\VarDumper;
-
 class UrlDispatcher
 {
 
@@ -64,6 +61,7 @@ class UrlDispatcher
 
 
         if (array_key_exists($uri, $routes)) {
+
             return new DispatchedRoute($routes[$uri]);
         }
         return $this->doDispatch($method, $uri);

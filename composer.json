@@ -2,11 +2,10 @@
     "name": "razor/cms",
     "autoload": {
         "psr-4": {
-            "Engine\\": "engine/",
-            "Engine\\DI\\": "engine/DI",
-            "Engine\\Utils\\": "engine/Utils",
-            "Engine\\Core\\": "engine/Core",
-            "Engine\\Service\\": "engine/Service"
+            "Engine\\": "engine",
+            "App\\": "app"
+
+
 
         }
     },
@@ -18,5 +17,6 @@
     ],
   "require": {
     "ext-pdo": "*"
+
   }
 }

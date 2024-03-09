@@ -7,7 +7,7 @@ use Engine\Service\AbstractProvider;
 
 
 
-class Provider extends AbstractProvider
+class RouterProvider extends AbstractProvider
 {
 
     public string $serviceName = 'router';
