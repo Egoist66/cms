@@ -2,9 +2,9 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Engine\CMS;
+use Engine\Cms;
 use Engine\DI\DI;
-use Engine\Utils\VarDumper;
+use Engine\Utils\VarDumper\VarDumper;
 
 try {
     //Dependency injection
@@ -19,7 +19,7 @@ try {
     }
 
 
-    $cms = new CMS($di);
+    $cms = new Cms($di);
     $cms->run();
 
 

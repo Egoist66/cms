@@ -3,13 +3,15 @@ declare(strict_types=1);
 
 namespace Engine;
 
-use Engine\DI\DI;
-use Engine\Helper\Request;
-use Engine\Utils\VarDumper;
-use Engine\Core\Database\Database;
+use Engine\Core\Router\DispatchedRoute;
 use Engine\Core\Router\Router;
+use Engine\DI\DI;
+use Engine\Helper\DoIfClassExists;
+use Engine\Helper\Request;
+use Engine\Utils\VarDumper\VarDumper;
+use Exception;
 
-class CMS
+class Cms
 {
     /**
      * @var DI
@@ -30,18 +32,53 @@ class CMS
     public final function run(): void
     {
 
-
-        $this->router->add('home', '/', 'HomeController/index');
-        $this->router->add('users', '/user/1', 'ProductController/index');
+        try {
 
 
-        $routerDispatch = $this->router->dispatch(Request::getRequestMethod(), Request::getUrlPath());
+            $this->router->add('home', '/', 'HomeController/index');
+            $this->router->add('news', '/news', 'HomeController/news');
 
 
-        VarDumper::dump(
-            'print',
-            $this->router->getDispatcher()
-                ->routes(Request::getRequestMethod())
-        )       ->fline(__FILE__, __LINE__);
+            $routerDispatch = $this->router->dispatch(Request::getRequestMethod(), Request::getUrlPath());
+            if (!$routerDispatch) {
+                $routerDispatch = new DispatchedRoute('ExceptionController/page404');
+
+            }
+
+            [$classController, $action] = explode('/', $routerDispatch->getController(), 2);
+
+
+            $controller = '\\App\\Controllers\\' . $classController;
+            DoIfClassExists::action($controller, $action, fn() => (
+            call_user_func_array([new $controller($this->di), $action], $routerDispatch->getParameters())
+
+            ), [__FILE__, __LINE__]);
+        }
+        catch (Exception $exception){
+            VarDumper::dump('danger', $exception, __FILE__, __LINE__);
+            exit;
+        }
+
+
+
     }
 }
+//
+//class Hello {
+//    public function greet(): string{
+//        return 'Hello mansdsdf!';
+//    }
+//}
+//
+//$services = [
+//    [
+//        "provider" => Hello::class,
+//        "action" => 'greet'
+//    ]
+//];
+//
+//foreach ($services as $service){
+//   $hello = new $service['provider'];
+//   $method = $service['action'];
+//    echo $hello->$method();
+//}

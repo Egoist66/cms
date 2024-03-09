@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Engine\Core\Database;
 
+use Engine\Utils\VarDumper\VarDumper;
 use PDO;
 use PDOException;
-use Engine\Utils\VarDumper;
 use PDOStatement;
 
 final class Database

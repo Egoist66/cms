@@ -2,9 +2,6 @@
 
 namespace Engine\Core\Router;
 
-use Engine\AbstractController;
-use Engine\Utils\VarDumper;
-
 class Router
 {
 

@@ -5,7 +5,7 @@ namespace Engine\Core\Router;
 
 
 
-use Engine\AbstractController;
+use Engine\controller;
 
 class DispatchedRoute {
 
@@ -25,6 +25,7 @@ class DispatchedRoute {
      */
     public final function getController(): string
     {
+
         return $this->controller;
     }    
     /**
