@@ -1,17 +1,6 @@
 <?php
 
-namespace Engine\Utils;
-
-use Exception;
-
-enum VarDumperTypes
-{
-    case Dump;
-    case Print;
-    case Debug;
-
-    case JSON;
-}
+namespace Engine\Utils\VarDumper;
 
 
 final class VarDumper
@@ -23,7 +12,7 @@ final class VarDumper
      * @param array|null $style
      * @return VarDumper
      */
-    public static final function dump(string $type, mixed $arg, ?array $style = ["size" => "18px", "color" => "skyblue"]): VarDumper
+    public static final function dump(string $type, mixed $arg, string $file = __FILE__, int $line = __LINE__, ?array $style = ["size" => "18px", "color" => "skyblue"]): VarDumper
     {
         switch (ucfirst($type)) {
             case VarDumperTypes::Dump->name:
@@ -41,7 +30,9 @@ final class VarDumper
                     
                     >";
 
-                var_dump($arg);
+
+                var_dump($arg . ' ' . "<span style='border-bottom: 1px solid wheat; display: inline-block'>" . self::getVDInst()->fline($file, $line) . "</span>");
+
                 echo "</pre>";
                 break;
             case VarDumperTypes::Print->name:
@@ -55,7 +46,7 @@ final class VarDumper
                     overflow-x: auto;
                     '>";
 
-                print_r($arg);
+                print_r($arg . ' ' . "<span style='border-bottom: 1px solid wheat; display: inline-block'>" . self::getVDInst()->fline($file, $line) . "</span>");
                 echo "</pre>";
                 break;
             case VarDumperTypes::Debug->name:
@@ -72,6 +63,20 @@ final class VarDumper
                 print "<mark>$arg</mark>";
                 echo "</pre>";
                 break;
+            case VarDumperTypes::Danger->name:
+                echo "<pre style='font-size: {$style["size"]}; 
+                    color: white;
+                    box-shadow: 1px 1px 20px 0px #333;
+                    background: red;
+                    margin: 0px 0px 10px 0px;
+                    padding: 10px;
+                    border-radius: 10px;
+                    white-space: pre-wrap;
+                    overflow-x: auto;
+                    '>";
+                print_r($arg . ' ' . "<span style='border-bottom: 1px solid wheat; display: inline-block'>" . self::getVDInst()->fline($file, $line) . "</span>");
+                echo "</pre>";
+                break;
             case VarDumperTypes::JSON->name:
                 echo "<pre style='font-size: {$style["size"]}; 
                     color: {$style["color"]};
@@ -82,7 +87,7 @@ final class VarDumper
                     white-space: pre-wrap;
                     overflow-x: auto;
                     '>";
-                echo json_encode($arg);
+                echo json_encode($arg . ' ' . "<span style='border-bottom: 1px solid wheat; display: inline-block'>" . self::getVDInst()->fline($file, $line) . "</span>");
                 echo "</pre>";
                 break;
 
@@ -94,14 +99,21 @@ final class VarDumper
     /**
      * @param string $file
      * @param int $line
-     * @param string|null $color
-     * @return void
+     * @param bool|null $alert
+     * @return string
      */
-    public final function fline(string $file, int $line, ?string $color = 'skyblue'): void
+    public function fline(string $file, int $line, ?bool $alert = false): string
     {
-        VarDumper::dump('Print', $file . ", " . "line: " . $line, ["size" => "18px", "color" => $color ?? 'black']);
+        if($alert){
+            VarDumper::dump('print', __FILE__ . " " . __LINE__);
+        }
+        return '    '.  $file . ", " . "line: " . $line;
     }
 
+    private static function getVDInst(): VarDumper
+    {
+        return new self();
+    }
 
 }
 
