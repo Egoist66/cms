@@ -49,6 +49,7 @@ class Cms
 
 
             $controller = '\\App\\Controllers\\' . $classController;
+            
             DoIfClassExists::action($controller, $action, fn() => (
             call_user_func_array([new $controller($this->di), $action], $routerDispatch->getParameters())
 

@@ -27,8 +27,10 @@ final class Database
 
         } catch (PDOException $e) {
             VarDumper::dump(
-                'Print',
+                'print',
                 "Connection failed {$e->getMessage()}",
+                __FILE__,
+                __LINE__,
                 ["size" => "1.2rem", "color" => "#2271B1"]
             );
         }
