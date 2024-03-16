@@ -23,3 +23,4 @@ class CmsController extends AbstractController
         return ob_get_clean();
     }
 }
+
