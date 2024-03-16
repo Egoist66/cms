@@ -2,10 +2,10 @@
 
 namespace App\Controllers;
 
-use Engine\Controller;
+use Engine\AbstractController;
 use Engine\DI\DI;
 
-class CmsController extends Controller
+class CmsController extends AbstractController
 {
 
     /**

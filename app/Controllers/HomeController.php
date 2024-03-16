@@ -2,9 +2,10 @@
 
 namespace App\Controllers;
 
+use Engine\AbstractController;
 use Engine\Utils\VarDumper\VarDumper;
 
-class HomeController extends CmsController
+class HomeController extends AbstractController
 {
 
     public final function index(): void

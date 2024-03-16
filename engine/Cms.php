@@ -26,6 +26,12 @@ class Cms
         $this->router = $this->di->get('router');
     }
 
+    public final function register(): void
+    {
+        $this->router->add('home', '/', 'HomeController/index');
+        $this->router->add('news', '/news', 'HomeController/news');
+    }
+
     /**
      * Run CMS app
      */
@@ -34,11 +40,7 @@ class Cms
 
         try {
 
-
-            $this->router->add('home', '/', 'HomeController/index');
-            $this->router->add('news', '/news', 'HomeController/news');
-
-
+            $this->register();
             $routerDispatch = $this->router->dispatch(Request::getRequestMethod(), Request::getUrlPath());
             if (!$routerDispatch) {
                 $routerDispatch = new DispatchedRoute('ExceptionController/page404');
@@ -46,20 +48,17 @@ class Cms
             }
 
             [$classController, $action] = explode('/', $routerDispatch->getController(), 2);
-
-
             $controller = '\\App\\Controllers\\' . $classController;
-            
+
+
             DoIfClassExists::action($controller, $action, fn() => (
             call_user_func_array([new $controller($this->di), $action], $routerDispatch->getParameters())
 
             ), [__FILE__, __LINE__]);
-        }
-        catch (Exception $exception){
+        } catch (Exception $exception) {
             VarDumper::dump('danger', $exception, __FILE__, __LINE__);
             exit;
         }
-
 
 
     }

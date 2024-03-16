@@ -4,7 +4,7 @@ namespace Engine\Service\Router;
 
 use Engine\Core\Router\Router;
 use Engine\Service\AbstractProvider;
-
+use Engine\Utils\VarDumper\VarDumper;
 
 
 class RouterProvider extends AbstractProvider
@@ -20,7 +20,6 @@ class RouterProvider extends AbstractProvider
     final public function init(): void {
 
         $router = new Router('http://cms/');
-
         $this->di->set($this->serviceName, $router);
     }
 }

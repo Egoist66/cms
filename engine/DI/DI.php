@@ -14,10 +14,10 @@ class DI
 
     /**
      * @param string $key
-     * @param $value
+     * @param mixed $value
      * @return $this
      */
-    final public function set(string $key, $value): DI
+    final public function set(string $key, mixed $value): DI
     {
         $this->container[$key] = $value;
         return $this;

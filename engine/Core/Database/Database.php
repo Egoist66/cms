@@ -27,11 +27,10 @@ final class Database
 
         } catch (PDOException $e) {
             VarDumper::dump(
-                'print',
+                'danger',
                 "Connection failed {$e->getMessage()}",
                 __FILE__,
-                __LINE__,
-                ["size" => "1.2rem", "color" => "#2271B1"]
+                __LINE__
             );
         }
 
@@ -65,6 +64,7 @@ final class Database
     public function execute(string $sql, array $prepared_params): bool|PDOStatement
     {
         try {
+            
             return $this->getConn()->prepare($sql)->execute($prepared_params);
         } catch (PDOException $e) {
             return false;

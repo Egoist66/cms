@@ -23,18 +23,12 @@ try {
     $cms->run();
 
 
-    //VarDumper::dump('dump', $di)->fline(__FILE__, __LINE__);
 
 
 } catch (Exception $e) {
 
-    VarDumper::dump('print', $e)->fline(__FILE__, __LINE__);
+    VarDumper::dump('danger', $e, __FILE__, __LINE__);
 
 
 }
-
-$arr = [
-    'name' => 'Farid',
-    'age' => 26
-];
 

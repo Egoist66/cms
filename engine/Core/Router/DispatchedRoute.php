@@ -5,7 +5,7 @@ namespace Engine\Core\Router;
 
 
 
-use Engine\controller;
+use Engine\AbstractController;
 
 class DispatchedRoute {
 

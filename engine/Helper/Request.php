@@ -8,14 +8,14 @@ class Request
      * @return bool
      */
     static public final function isPost(): bool {
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if(self::getRequestMethod() === 'POST'){
             return true;
         }
 
         return false;
     }
 
-    /**
+    /** returns $_SERVER request method
      * @return string
      */
     static public final function getRequestMethod(): string {
@@ -28,6 +28,7 @@ class Request
     static public final function getUrlPath(): string{
         $urlPath = $_SERVER['REQUEST_URI'];
         if($position = strpos($urlPath, '?')){
+
             return substr($urlPath, 0, $position);
         }
 

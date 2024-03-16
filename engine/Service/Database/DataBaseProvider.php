@@ -22,7 +22,6 @@ class DataBaseProvider extends AbstractProvider
     final public function init(): void
     {
         $db = Database::dbInst();
-
         $this->di->set($this->serviceName, $db);
     }
 }

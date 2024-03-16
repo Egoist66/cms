@@ -9,6 +9,8 @@ final class VarDumper
     /**
      * @param string $type
      * @param mixed $arg
+     * @param string $file
+     * @param int $line
      * @param array|null $style
      * @return VarDumper
      */
@@ -46,7 +48,7 @@ final class VarDumper
                     overflow-x: auto;
                     '>";
 
-                print_r($arg . ' ' . "<span style='border-bottom: 1px solid wheat; display: inline-block'>" . self::getVDInst()->fline($file, $line) . "</span>");
+                print_r($arg);
                 echo "</pre>";
                 break;
             case VarDumperTypes::Debug->name:
@@ -104,10 +106,10 @@ final class VarDumper
      */
     public function fline(string $file, int $line, ?bool $alert = false): string
     {
-        if($alert){
+        if ($alert) {
             VarDumper::dump('print', __FILE__ . " " . __LINE__);
         }
-        return '    '.  $file . ", " . "line: " . $line;
+        return '    ' . $file . ", " . "line: " . $line;
     }
 
     private static function getVDInst(): VarDumper

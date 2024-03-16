@@ -5,7 +5,7 @@ namespace Engine;
 use Engine\Core\Database\Database;
 use Engine\DI\DI;
 
-abstract class Controller {
+abstract class AbstractController {
 
     protected DI $di;
     protected Database $db;
