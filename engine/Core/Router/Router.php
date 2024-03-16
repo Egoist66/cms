@@ -28,6 +28,7 @@ class Router
     public final function add(string $key, string $pattern, string $controller, string $method = 'GET'): void
     {
 
+
         $this->routes[$key] = [
             'pattern' => $pattern,
             'controller' => $controller,
@@ -47,7 +48,7 @@ class Router
      */
 
 
-    public final function dispatch(string $method, string $uri): DispatchedRoute | null
+    public final function dispatch(string $method, string $uri): DispatchedRoute|null
     {
         return $this->getDispatcher()->dispatch($method, $uri);
     }
@@ -59,7 +60,7 @@ class Router
     {
         if (is_null($this->dispatcher)) {
             $this->dispatcher = new UrlDispatcher();
-            foreach ($this->routes as $route){
+            foreach ($this->routes as $route) {
                 $this->dispatcher->register($route['method'], $route['pattern'], $route['controller']);
             }
         }

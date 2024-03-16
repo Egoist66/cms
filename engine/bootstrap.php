@@ -16,6 +16,7 @@ try {
     foreach ($services as $service) {
         $provider = new $service($di);
         $provider->init();
+
     }
 
 

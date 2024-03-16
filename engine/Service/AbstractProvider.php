@@ -6,6 +6,7 @@ use Engine\DI\DI;
 
 abstract class AbstractProvider
 {
+    public string $serviceName;
     /**
      * @var DI
      */

@@ -11,13 +11,14 @@ class RouterProvider extends AbstractProvider
 {
 
     public string $serviceName = 'router';
-        
+
     /**
      * inits services
      *
      * @return void
      */
-    final public function init(): void {
+    public final function init(): void
+    {
 
         $router = new Router('http://cms/');
         $this->di->set($this->serviceName, $router);

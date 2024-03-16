@@ -3,6 +3,8 @@
 
 namespace Engine\Core\Router;
 
+use Engine\Utils\VarDumper\VarDumper;
+
 class UrlDispatcher
 {
 
@@ -13,6 +15,9 @@ class UrlDispatcher
         'POST' => []
     ];
 
+    /**
+     * @var array|string[]
+     */
     private array $patterns = [
         'int' => '[0-9]+',
         'str' => '[a- zA-Z\.\-_%]+',
@@ -43,9 +48,40 @@ class UrlDispatcher
         return $this->routes[$method] ?? [];
     }
 
+    /**
+     * @param string $method
+     * @param string $pattern
+     * @param string $controller
+     * @return void
+     */
     public final function register(string $method, string $pattern, string $controller): void
     {
-        $this->routes[strtoupper($method)][$pattern] = $controller;
+        $converted = $this->convertPattern($pattern);
+        $this->routes[strtoupper($method)][$converted] = $controller;
+
+    }
+
+    /**
+     * @param string $pattern
+     * @return string
+     */
+    private function convertPattern(string $pattern): mixed
+
+    {
+
+        if (!str_contains($pattern, '(')) {
+
+            return $pattern;
+        }
+        return preg_replace_callback('#\((\w+):(\w+)\)#', [$this, 'replacePattern'], $pattern);
+    }
+
+    private function replacePattern(array $matches): string
+    {
+        VarDumper::dump('print', $matches);
+        $str = '(?<' .$matches[1]. '>' . strtr($matches[2], $this->patterns) .')';
+        echo $str;
+        return $str;
     }
 
     /**
@@ -67,16 +103,16 @@ class UrlDispatcher
         return $this->doDispatch($method, $uri);
     }
 
-    public final function doDispatch(string $method, string $uri): DispatchedRoute | null
+    public final function doDispatch(string $method, string $uri): DispatchedRoute|null
     {
         foreach ($this->routes($method) as $route => $controller) {
             $pattern = '#^' . $route . '$#s';
-            if(preg_match($pattern, $uri, $parameters)){
+            if (preg_match($pattern, $uri, $parameters)) {
                 return new DispatchedRoute($controller, $parameters);
             }
 
         }
 
-        return  null;
+        return null;
     }
 }
