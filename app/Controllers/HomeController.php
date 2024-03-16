@@ -13,10 +13,14 @@ class HomeController extends CmsController
         VarDumper::dump('dump', 'Hello home', __FILE__, __LINE__);
     }
 
-    public final function news(array $idd): void
+    public final function news(array $params): void
     {
-        VarDumper::dump('print', func_get_args());
-        VarDumper::dump('dump', 'Hello news' . __FILE__, __LINE__);
+        if(!isset($params['id'])){
+            VarDumper::dump('dump', 'Hello news ' . __FILE__, __LINE__);
+            return;
+        }
+
+        VarDumper::dump('dump', 'Hello news ' . $params['id'] . ' ' . __FILE__, __LINE__);
     }
 
 

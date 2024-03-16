@@ -44,7 +44,7 @@ class Cms
 
             $this->register();
             $routerDispatch = $this->router->dispatch(Request::getRequestMethod(), Request::getUrlPath());
-            if ($routerDispatch === null) {
+            if (!$routerDispatch) {
                 $routerDispatch = new DispatchedRoute('ExceptionController/page404');
 
             }
@@ -52,9 +52,11 @@ class Cms
             [$classController, $action] = explode('/', $routerDispatch->getController(), 2);
             $controller = '\\App\\Controllers\\' . $classController;
 
-            VarDumper::dump('print', $routerDispatch->getParameters());
+
+//            VarDumper::dump('print', $routerDispatch->getParameters());
+
             DoIfClassExists::action($controller, $action, fn() => (
-                call_user_func_array([new $controller($this->di), $action], $routerDispatch->getParameters())
+            call_user_func_array([new $controller($this->di), $action], [$routerDispatch->getParameters()])
 
 
             ), [__FILE__, __LINE__]);

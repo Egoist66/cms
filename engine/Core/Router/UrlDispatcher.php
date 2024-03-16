@@ -76,12 +76,29 @@ class UrlDispatcher
         return preg_replace_callback('#\((\w+):(\w+)\)#', [$this, 'replacePattern'], $pattern);
     }
 
+    /**
+     * @param array $matches
+     * @return string
+     */
     private function replacePattern(array $matches): string
     {
-        VarDumper::dump('print', $matches);
-        $str = '(?<' .$matches[1]. '>' . strtr($matches[2], $this->patterns) .')';
-        echo $str;
-        return $str;
+//        VarDumper::dump('print', $matches);
+        return '(?<' . $matches[1] . '>' . strtr($matches[2], $this->patterns) . ')';
+    }
+
+    /**
+     * @param array $parameters
+     * @return array
+     */
+    private function processParams(array $parameters): array
+    {
+        foreach ($parameters as $key => $value) {
+            if(is_int($key)){
+                unset($parameters[$key]);
+            }
+        }
+
+        return $parameters;
     }
 
     /**
@@ -103,12 +120,17 @@ class UrlDispatcher
         return $this->doDispatch($method, $uri);
     }
 
+    /**
+     * @param string $method
+     * @param string $uri
+     * @return DispatchedRoute|null
+     */
     public final function doDispatch(string $method, string $uri): DispatchedRoute|null
     {
         foreach ($this->routes($method) as $route => $controller) {
             $pattern = '#^' . $route . '$#s';
             if (preg_match($pattern, $uri, $parameters)) {
-                return new DispatchedRoute($controller, $parameters);
+                return new DispatchedRoute($controller, $this->processParams($parameters));
             }
 
         }
