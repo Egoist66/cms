@@ -1,4 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once 'engine/bootstrap.php';
 
+
+const ROOT = __DIR__;
+require_once 'engine/bootstrap.php';

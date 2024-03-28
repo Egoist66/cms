@@ -4,6 +4,7 @@ namespace Engine\Service\Database;
 
 use Engine\Core\Database\Database;
 use Engine\Service\AbstractProvider;
+use Engine\Utils\VarDumper\VarDumper;
 
 class DataBaseProvider extends AbstractProvider
 {
@@ -13,7 +14,8 @@ class DataBaseProvider extends AbstractProvider
     public string $serviceName = 'db';
 
 
-        
+
+
     /**
      * inits services
      *
@@ -21,7 +23,9 @@ class DataBaseProvider extends AbstractProvider
      */
     final public function init(): void
     {
+
         $db = Database::dbInst();
+
         $this->di->set($this->serviceName, $db);
     }
 }

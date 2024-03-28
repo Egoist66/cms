@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Engine;
 
+use App\Routes\Routes;
 use Engine\Core\Router\DispatchedRoute;
 use Engine\Core\Router\Router;
 use Engine\DI\DI;
@@ -26,13 +27,7 @@ class Cms
         $this->router = $this->di->get('router');
     }
 
-    public final function register(): void
-    {
-        $this->router->add('home', '/', 'HomeController/index');
-        $this->router->add('news', '/news', 'HomeController/news');
-        $this->router->add('news_single', '/news/(id:int)', 'HomeController/news');
-
-    }
+   
 
     /**
      * Run CMS app
@@ -42,7 +37,9 @@ class Cms
 
         try {
 
-            $this->register();
+            
+            Routes::register($this);
+
             $routerDispatch = $this->router->dispatch(Request::getRequestMethod(), Request::getUrlPath());
             if (!$routerDispatch) {
                 $routerDispatch = new DispatchedRoute('ExceptionController/page404');
@@ -53,10 +50,9 @@ class Cms
             $controller = '\\App\\Controllers\\' . $classController;
 
 
-//            VarDumper::dump('print', $routerDispatch->getParameters());
 
             DoIfClassExists::action($controller, $action, fn() => (
-            call_user_func_array([new $controller($this->di), $action], [$routerDispatch->getParameters()])
+                call_user_func_array([new $controller($this->di), $action], [$routerDispatch->getParameters()])
 
 
             ), [__FILE__, __LINE__]);

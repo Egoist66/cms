@@ -2,7 +2,7 @@
 
 namespace Engine\Core\Router;
 
-class Router
+final class Router
 {
 
     private array $routes = [];

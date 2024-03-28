@@ -17,11 +17,6 @@ class CmsController extends AbstractController
         parent::__construct($di);
     }
 
-    public final  function template(string $path): bool | string{
-        ob_start();
-        include_once $path;
-
-        return ob_get_clean();
-    }
+    
 }
 

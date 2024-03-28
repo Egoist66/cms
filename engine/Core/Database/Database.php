@@ -80,6 +80,7 @@ final class Database
     {
         try {
             $stm = $this->getConn()->query($sql);
+            
             return $mode === 'single' ? $stm->fetch() : $stm->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return [];

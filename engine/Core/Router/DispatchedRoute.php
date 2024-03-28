@@ -5,8 +5,6 @@ namespace Engine\Core\Router;
 
 
 
-use Engine\AbstractController;
-
 class DispatchedRoute {
 
     private string $controller;
