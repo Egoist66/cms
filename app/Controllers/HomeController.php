@@ -13,6 +13,7 @@ class HomeController extends CmsController
     public final function index(): void
     {
         $arr = [1, 2, 3, 4, 5];
+        
         $this->view->render('index', ['arr' => $arr]);
     }
 

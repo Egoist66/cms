@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Engine;
 
+use Admin\AdminRoutes;
 use App\Routes\Routes;
 use Engine\Core\Router\DispatchedRoute;
 use Engine\Core\Router\Router;
@@ -37,8 +38,13 @@ class Cms
 
         try {
 
-            
-            Routes::register($this);
+            if(ENV == 'App'){
+                Routes::register($this);
+            }
+            else {
+
+                AdminRoutes::register($this);
+            }
 
             $routerDispatch = $this->router->dispatch(Request::getRequestMethod(), Request::getUrlPath());
             if (!$routerDispatch) {
@@ -47,7 +53,7 @@ class Cms
             }
 
             [$classController, $action] = explode('/', $routerDispatch->getController(), 2);
-            $controller = '\\App\\Controllers\\' . $classController;
+            $controller = '\\'. ENV . '\\Controllers\\' . $classController;
 
 
 

@@ -3,7 +3,8 @@
     "autoload": {
         "psr-4": {
             "Engine\\": "engine",
-            "App\\": "app"
+            "App\\": "app",
+            "Admin\\": "admin"
 
 
 

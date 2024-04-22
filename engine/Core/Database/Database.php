@@ -15,7 +15,13 @@ final class Database
 
     private function __construct()
     {
-        require_once './engine/Config/Database/db-config.php';
+        if(file_exists('./db-config.php')){
+            require_once './db-config.php';
+        }
+        else {
+            require_once '../db-config.php';
+
+        }
         try {
             $dsn = "mysql:host=" . DB_HOST . ";" . "dbname=" . DB_NAME;
             $this->conn = new PDO(

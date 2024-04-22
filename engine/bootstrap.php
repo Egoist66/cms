@@ -2,6 +2,9 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+Engine\Utils\Functions\Debug::init();
+
+
 use Engine\Cms;
 use Engine\DI\DI;
 use Engine\Utils\VarDumper\VarDumper;
